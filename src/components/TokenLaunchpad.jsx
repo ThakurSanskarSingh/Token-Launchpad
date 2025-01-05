@@ -1,6 +1,7 @@
-import { createMint,getMinimumBalanceForRentExemptMint,MINT_SIZE,TOKEN_PROGRAM_ID, createInitializeMint2Instruction } from "@solana/spl-token"
+import { createMint,getMinimumBalanceForRentExemptMint,MINT_SIZE,TOKEN_2022_PROGRAM_ID, createInitializeMint2Instruction } from "@solana/spl-token"
 import { useConnection, useWallet } from "@solana/wallet-adapter-react"
 import { Keypair,Transaction,SystemProgram } from "@solana/web3.js"
+
 
 
 export function TokenLaunchpad() {
@@ -16,16 +17,25 @@ export function TokenLaunchpad() {
 
         const lamports = await getMinimumBalanceForRentExemptMint(connection);
         const keypair  = Keypair.generate()
-
+        const metadata = {
+            name,
+            symbol,
+            uri: image,
+            sellerFeeBasisPoints: 0,
+            creators: null,
+            collection: null,
+            uses: null,
+        }
         const transaction = new Transaction().add(
             SystemProgram.createAccount({
                 fromPubkey: wallet.publicKey,
                 newAccountPubkey: keypair.publicKey,
                 space: MINT_SIZE, //req size to store data = 82 bytes
                 lamports, //amount of lamports req to create this accouunt
-                programId : TOKEN_PROGRAM_ID, //is the owner of the account - who owns this - Solana-Token_program
+                programId : TOKEN_2022_PROGRAM_ID, //is the owner of the account - who owns this - Solana-Token_program
             }),
-            createInitializeMint2Instruction(keypair.publicKey, 6, wallet.publicKey, wallet.publicKey,TOKEN_PROGRAM_ID ), //pass the data to account created
+            createInitializeMint2Instruction(keypair.publicKey, 6, wallet.publicKey, wallet.publicKey,TOKEN_2022_PROGRAM_ID ), //pass the data to account created
+            createMetaDa
         );
 
         const recentBlockHash = await connection.getLatestBlockhash()

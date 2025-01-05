@@ -3,9 +3,6 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react"
 import { Keypair,Transaction,SystemProgram } from "@solana/web3.js"
 
 
-
-
-
 export function TokenLaunchpad() {
 
     const wallet = useWallet()
@@ -39,6 +36,12 @@ export function TokenLaunchpad() {
         transaction.partialSign(keypair)
       const response = await  wallet.sendTransaction(transaction,connection)
       console.log(response)
+//create a transaction of createAccount - give it fromPubKey - users publckey, newPubKey - keypair.publickey new generated tokens public key 
+//space - mint_size size req to store data whicih is usually 82 bytes
+//lanports - mini lamports to be rent exempted
+//programId token program id owner of the program which is solana tokemn program
+//empty account is creates now add data to this account using crateinitialze mint transacrion funciton and passing is pubkey,decimals,mint authority  , freeze authority
+//normallly create mint req users privatey for creatin a token but we will use partiall sign methid and thenwe will send transaction to wallet for accepitng the creation of otken it also req recent block a=hash bcoz in solana we cannot add further blockd without recent block hash it is interconnected 
 
 
     }
